@@ -1,12 +1,12 @@
 pipeline {
     agent { label 'linux-agent'}
     tools {
-        maven 'maven'
+        maven 'Maven'
     }
     stages {
         stage('Checkout From Git') { 
             steps {
-                git branch: 'prod', url: 'https://github.com/bkrrajmali/enahanced-petclinc-springboot.git'
+                git branch: 'prod', url: 'https://github.com/Synyster008/enahanced-petclinc-springboot.git'
             }
         }
         stage('Maven Compile') { 
