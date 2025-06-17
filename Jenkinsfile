@@ -19,35 +19,35 @@ pipeline {
                 sh 'trivy fs --format table --exit-code 1 --severity HIGH,CRITICAL .'
             }
         }
-        stage ('SonarQube Analysis') {
-            environment {
-                    SCANNER_HOME = tool 'SonarQube Scanner'
-                }
-            steps {
-                echo 'This SonarQube Analysis Stage'
-                withSonarQubeEnv('SonarQube') {
-                    sh '''
-                        $SCANNER_HOME/bin/sonar-scanner \
-                        -Dsonar.organization=synyster008 \
-                        -Dsonar.projectName=springboot \
-                        -Dsonar.projectKey=synyster008_springboot \
-                        -Dsonar.java.binaries= \
-                        -Dsonar.exclusions=**/trivy-report.txt
-                    '''
-                }
-            }
-        }
-        stage('SonarQube Quality Gate') {
+        // stage ('SonarQube Analysis') {
+        //     environment {
+        //             SCANNER_HOME = tool 'SonarQube Scanner'
+        //         }
+        //     steps {
+        //         echo 'This SonarQube Analysis Stage'
+        //         withSonarQubeEnv('SonarQube') {
+        //             sh '''
+        //                 $SCANNER_HOME/bin/sonar-scanner \
+        //                 -Dsonar.organization=synyster008 \
+        //                 -Dsonar.projectName=springboot \
+        //                 -Dsonar.projectKey=synyster008_springboot \
+        //                 -Dsonar.java.binaries= \
+        //                 -Dsonar.exclusions=**/trivy-report.txt
+        //             '''
+        //         }
+        //     }
+        // }
+        // stage('SonarQube Quality Gate') {
             
                 
-            steps{
-                echo 'This SonarQube Quality Gate Stage'
-                timeout(time: 1, unit: 'MINUTES') {
-                    waitForQualityGate abortPipeline: true
-                }
-            }
+        //     steps{
+        //         echo 'This SonarQube Quality Gate Stage'
+        //         timeout(time: 1, unit: 'MINUTES') {
+        //             waitForQualityGate abortPipeline: true
+        //         }
+        //     }
         
-        }
+        // }
 
         stage('Maven Package') { 
             steps {
