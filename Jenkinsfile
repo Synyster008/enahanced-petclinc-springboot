@@ -59,7 +59,7 @@ pipeline {
             steps {
                 script{
                     echo 'This Docker Build Stage'
-                    docker.build "${IMAGE_NAME}:${IMAGE_TAG}", '-f Dockerfile .'
+                    docker.build ("$IMAGE_NAME:$IMAGE_TAG")
 
                 }
                 
