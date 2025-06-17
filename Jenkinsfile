@@ -4,7 +4,7 @@ pipeline {
         maven 'Maven'
     }
     environment {
-        IMAGE_NAME = 'synyster008/springboot:latest'
+        IMAGE_NAME = 'springboot'
         IMAGE_TAG = 'latest'
     }
     stages {
@@ -60,7 +60,6 @@ pipeline {
                 script{
                     echo 'This Docker Build Stage'
                     docker.build ("$IMAGE_NAME:$IMAGE_TAG")
-
                 }
                 
             }
