@@ -3,23 +3,16 @@ pipeline {
     tools {
         maven 'Maven'
     }
+    environment {
+        IMAGE_NAME = 'synyster008/springboot:latest'
+        IMAGE_TAG = 'latest'
+    }
     stages {
         stage('Checkout From Git') { 
             steps {
                 git branch: 'prod', url: 'https://github.com/Synyster008/enahanced-petclinc-springboot.git'
             }
         }
-        stage('Maven Compile') { 
-            steps {
-                echo 'This Maven Compile Stage'
-                sh 'mvn compile'
-            }
-        }
-        stage('Maven Test') { 
-            steps {
-                echo 'This Maven Test Stage'
-                sh 'mvn test'
-            }
         }
         stage('Trivy Scan') { 
             steps {
@@ -46,14 +39,32 @@ pipeline {
             }
         }
         stage('SonarQube Quality Gate') {
-            steps {
+            
+                
+            steps{
                 echo 'This SonarQube Quality Gate Stage'
-                steps{
-                    timeout(time: 1, unit: 'MINUTES') {
-                        waitForQualityGate abortPipeline: true
+                timeout(time: 1, unit: 'MINUTES') {
+                    waitForQualityGate abortPipeline: true
                 }
             }
+        
         }
+
+        stage('Maven Package') { 
+            steps {
+                echo 'This Maven Package Stage'
+                sh 'mvn package'
+            }
+        }
+        stage('Docker Build') { 
+            steps {
+                script{
+                    echo 'This Docker Build Stage'
+                    docker.build "${IMAGE_NAME}:${IMAGE_TAG}", '-f Dockerfile .'
+
+                }
+                
+            }
         }
     }
 }
