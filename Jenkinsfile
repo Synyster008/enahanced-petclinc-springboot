@@ -13,7 +13,6 @@ pipeline {
                 git branch: 'prod', url: 'https://github.com/Synyster008/enahanced-petclinc-springboot.git'
             }
         }
-        }
         stage('Trivy Scan') { 
             steps {
                 echo 'This Trivy Scan Stage'
