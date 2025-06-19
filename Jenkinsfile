@@ -77,7 +77,7 @@ pipeline {
                 
                 script{
                     sh '''
-                    az login --service-principal -u $AZURE_SPN_USERNAME -p $AZURE_SPN_PASSWORD --tenant $TENANT_ID
+                    az login --service-principal -u $AZURE_USERNAME -p $AZURE_PASSWORD --tenant $TENANT_ID
                     az acr login --name $ACR_NAME
                     '''
                 }
