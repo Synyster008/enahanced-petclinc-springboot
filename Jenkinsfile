@@ -97,12 +97,12 @@ pipeline {
         }
         stage('Jenkins Login to AKS') {
             steps {
-                withCredentials(usernamePassword(credentialIsID:'azurespn', usernameVariable: 'AZURE_SPN_USERNAME', passwordVariable: 'AZURE_SPN_PASSWORD')) {
+                withCredentials([usernamePassword(credentialsId: 'azurespn', usernameVariable: 'AZURE_USERNAME', passwordVariable: 'AZURE_PASSWORD')]) {
                    echo 'This Login to AKS Stage with Jenkins'
                 
                 script{
                     sh '''
-                    az login --service-principal -u $AZURE_SPN_USERNAME -p $AZURE_SPN_PASSWORD --tenant $TENANT_ID
+                    az login --service-principal -u $AZURE_USERNAME -p $AZURE_PASSWORD --tenant $TENANT_ID
                     az aks get-credentials --resource-group $RESOURCE_GROUP --name $CLUSTER_NAME
                     '''
                 }
