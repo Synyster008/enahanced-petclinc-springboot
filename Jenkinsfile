@@ -116,7 +116,6 @@ pipeline {
                 script {
                     sh '''
                     kubectl apply -f k8s/sprinboot-deployment.yaml
-                    kubectl apply -f k8s/service.yaml
                     '''
                 }
             }
